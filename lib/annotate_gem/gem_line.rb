@@ -10,6 +10,11 @@ module AnnotateGem
       @location = (named_params && named_params[:location]) || args[2]
       @prev_line_comment = (named_params && named_params[:prev_line_comment]) || args[3]
       @options = (named_params && named_params[:options]) || named_params
+      @spec = begin
+                ::Gem::Specification.find_by_name(@name)
+              rescue ::Gem::MissingSpecError
+                nil
+              end
     end
 
     def comment
